@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Currency Converter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+            --border-radius: 12px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .hero-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            margin-top: 30px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .feature i {
+            color: var(--success);
+        }
+
+        .converter-section {
+            padding: 40px;
+        }
+
+        .converter-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .converter-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .converter-header p {
+            color: var(--gray);
+        }
+
+        .converter-card {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .amount-input {
+            position: relative;
+        }
+
+        .amount-input input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .amount-input input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .currency-selectors {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .currency-from, .currency-to {
+            flex: 1;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 1em;
+            transition: var(--transition);
+        }
+
+        select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .swap-btn {
+            background: white;
+            border: 1px solid #ddd;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 8px;
+        }
+
+        .swap-btn:hover {
+            background: #f1f1f1;
+            transform: rotate(180deg);
+        }
+
+        .swap-btn i {
+            color: var(--primary);
+        }
+
+        .convert-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .convert-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .result-container {
+            margin-top: 25px;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-amount {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .exchange-rate {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .update-time {
+            color: #adb5bd;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        .error-message {
+            color: var(--secondary);
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .popular-conversions {
+            margin-top: 30px;
+        }
+
+        .popular-conversions h3 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .popular-conversions h3 i {
+            color: var(--primary);
+        }
+
+        .popular-pairs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .popular-pair {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .popular-pair:hover {
+            background: #f8f9fa;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-section {
+                padding: 30px 20px;
+            }
+            
+            .converter-section {
+                padding: 30px 20px;
+            }
+            
+            .currency-selectors {
+                flex-direction: column;
+            }
+            
+            .swap-btn {
+                align-self: center;
+                transform: rotate(90deg);
+            }
+            
+            .swap-btn:hover {
+                transform: rotate(270deg);
+            }
+            
+            .popular-pairs {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .popular-pairs {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-amount {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="logo">
+                <i class="fas fa-exchange-alt"></i>
+                <h1>Currenzy</h1>
+            </div>
+            <div class="hero-content">
+                <h2>Currency Converter Made by Sahil</h2>
+                <p>I did many struggles for complete this project.</p>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>ALL CURRENCY AVAILABLE</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>ALL COUNTRY CURRENCY</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>No hidden fees</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Converter Section -->
+        <div class="converter-section">
+            <div class="converter-header">
+                <h2>Currency Converter</h2>
+                <p>Get instant currency conversions</p>
+            </div>
+
+            <div class="converter-card">
+                <div class="input-group amount-input">
+                    <label for="amount"><i class="fas fa-money-bill-wave"></i> Amount</label>
+                    <div class="amount-input">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" id="amount" placeholder="Enter amount" step="0.01" min="0">
+                    </div>
+                </div>
+
+                <div class="currency-selectors">
+                    <div class="input-group currency-from">
+                        <label for="from_currency"><i class="fas fa-arrow-down"></i> From</label>
+                        <select id="from_currency">
+                            <option value="USD" data-symbol="$">USD - US Dollar</option>
+                            <option value="EUR" data-symbol="€">EUR - Euro</option>
+                            <option value="GBP" data-symbol="£">GBP - British Pound</option>
+                            <option value="JPY" data-symbol="¥">JPY - Japanese Yen</option>
+                            <option value="AUD" data-symbol="A$">AUD - Australian Dollar</option>
+                            <option value="CAD" data-symbol="C$">CAD - Canadian Dollar</option>
+                            <option value="INR" data-symbol="₹">INR - Indian Rupee</option>
+                        </select>
+                    </div>
+
+                    <button class="swap-btn" id="swap-currencies" title="Swap currencies">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
+
+                    <div class="input-group currency-to">
+                        <label for="to_currency"><i class="fas fa-arrow-up"></i> To</label>
+                        <select id="to_currency">
+                            <option value="EUR" data-symbol="€">EUR - Euro</option>
+                            <option value="USD" data-symbol="$">USD - US Dollar</option>
+                            <option value="GBP" data-symbol="£">GBP - British Pound</option>
+                            <option value="JPY" data-symbol="¥">JPY - Japanese Yen</option>
+                            <option value="AUD" data-symbol="A$">AUD - Australian Dollar</option>
+                            <option value="CAD" data-symbol="C$">CAD - Canadian Dollar</option>
+                            <option value="INR" data-symbol="₹">INR - Indian Rupee</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="convert-btn" id="convert-btn">
+                    <i class="fas fa-calculator"></i> Convert
+                </button>
+            </div>
+
+            <div class="result-container">
+                <div id="result" class="result-amount">
+                    <span class="original-amount">0 USD</span>
+                    <i class="fas fa-equals"></i>
+                    <span class="converted-amount">0 EUR</span>
+                </div>
+                <div id="rate" class="exchange-rate">1 USD = 0.85 EUR</div>
+                <div id="time" class="update-time">Rates update every minute</div>
+            </div>
+
+            <div id="error" class="error-message"></div>
+
+            <div class="popular-conversions">
+                <h3><i class="fas fa-star"></i> Popular Conversions</h3>
+                <div class="popular-pairs">
+                    <button class="popular-pair" data-from="USD" data-to="EUR">USD to EUR</button>
+                    <button class="popular-pair" data-from="EUR" data-to="GBP">EUR to GBP</button>
+                    <button class="popular-pair" data-from="USD" data-to="GBP">USD to GBP</button>
+                    <button class="popular-pair" data-from="USD" data-to="JPY">USD to JPY</button>
+                    <button class="popular-pair" data-from="EUR" data-to="USD">EUR to USD</button>
+                    <button class="popular-pair" data-from="GBP" data-to="USD">GBP to USD</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Currency symbols mapping
+        const currencySymbols = {
+            'USD': '$',
+            'EUR': '€',
+            'GBP': '£',
+            'JPY': '¥',
+            'AUD': 'A$',
+            'CAD': 'C$',
+            'INR': '₹'
+        };
+
+        // DOM elements
+        const amountInput = document.getElementById('amount');
+        const fromCurrency = document.getElementById('from_currency');
+        const toCurrency = document.getElementById('to_currency');
+        const convertBtn = document.getElementById('convert-btn');
+        const swapBtn = document.getElementById('swap-currencies');
+        const resultDiv = document.getElementById('result');
+        const rateDiv = document.getElementById('rate');
+        const timeDiv = document.getElementById('time');
+        const errorDiv = document.getElementById('error');
+        const currencySymbol = document.querySelector('.currency-symbol');
+        const popularPairs = document.querySelectorAll('.popular-pair');
+
+        // Update currency symbol when from currency changes
+        fromCurrency.addEventListener('change', function() {
+            const selectedCurrency = this.value;
+            currencySymbol.textContent = currencySymbols[selectedCurrency] || selectedCurrency;
+            updateResultPlaceholder();
+        });
+
+        // Swap currencies
+        swapBtn.addEventListener('click', function() {
+            const temp = fromCurrency.value;
+            fromCurrency.value = toCurrency.value;
+            toCurrency.value = temp;
+            
+            // Update symbols
+            currencySymbol.textContent = currencySymbols[fromCurrency.value] || fromCurrency.value;
+            updateResultPlaceholder();
+            
+            // If amount is entered, convert immediately
+            if (amountInput.value) {
+                convertCurrency();
+            }
+        });
+
+        // Handle popular conversions
+        popularPairs.forEach(pair => {
+            pair.addEventListener('click', function() {
+                fromCurrency.value = this.getAttribute('data-from');
+                toCurrency.value = this.getAttribute('data-to');
+                
+                // Update symbols
+                currencySymbol.textContent = currencySymbols[fromCurrency.value] || fromCurrency.value;
+                updateResultPlaceholder();
+                
+                // If amount is entered, convert immediately
+                if (amountInput.value) {
+                    convertCurrency();
+                }
+            });
+        });
+
+        // Convert button click handler
+        convertBtn.addEventListener('click', convertCurrency);
+
+        // Update result placeholder
+        function updateResultPlaceholder() {
+            const fromCode = fromCurrency.value;
+            const toCode = toCurrency.value;
+            const fromSym = currencySymbols[fromCode] || fromCode;
+            const toSym = currencySymbols[toCode] || toCode;
+            
+            resultDiv.innerHTML = `
+                <span class="original-amount">0 ${fromCode}</span>
+                <i class="fas fa-equals"></i>
+                <span class="converted-amount">0 ${toCode}</span>
+            `;
+            rateDiv.textContent = `1 ${fromCode} = 0 ${toCode}`;
+        }
+
+        // Currency conversion function
+        function convertCurrency() {
+            const amount = amountInput.value;
+            const from = fromCurrency.value;
+            const to = toCurrency.value;
+            
+            // Clear previous error
+            errorDiv.textContent = '';
+            
+            // Validate input
+            if (!amount || isNaN(amount) || amount <= 0) {
+                errorDiv.textContent = 'Please enter a valid amount greater than 0';
+                return;
+            }
+            
+            // For demo purposes - in a real app, you would call your Flask backend here
+            // This is a mock implementation with fixed rates
+            const exchangeRates = {
+                USD: { EUR: 0.85, GBP: 0.73, JPY: 110.15, AUD: 1.29, CAD: 1.25, INR: 74.85 },
+                EUR: { USD: 1.18, GBP: 0.86, JPY: 129.53, AUD: 1.52, CAD: 1.47, INR: 88.12 },
+                GBP: { USD: 1.37, EUR: 1.16, JPY: 150.23, AUD: 1.77, CAD: 1.71, INR: 102.45 },
+                JPY: { USD: 0.0091, EUR: 0.0077, GBP: 0.0067, AUD: 0.0118, CAD: 0.0114, INR: 0.68 },
+                AUD: { USD: 0.78, EUR: 0.66, GBP: 0.57, JPY: 84.75, CAD: 0.97, INR: 58.12 },
+                CAD: { USD: 0.80, EUR: 0.68, GBP: 0.59, JPY: 87.72, AUD: 1.03, INR: 60.15 },
+                INR: { USD: 0.013, EUR: 0.011, GBP: 0.0098, JPY: 1.47, AUD: 0.017, CAD: 0.017 }
+            };
+            
+            // Show loading state
+            resultDiv.innerHTML = `<span>Converting...</span>`;
+            rateDiv.textContent = '';
+            timeDiv.textContent = '';
+            
+            // Simulate API delay
+            setTimeout(() => {
+                try {
+                    if (from === to) {
+                        // Same currency conversion
+                        resultDiv.innerHTML = `
+                            <span class="original-amount">${amount} ${from}</span>
+                            <i class="fas fa-equals"></i>
+                            <span class="converted-amount">${amount} ${to}</span>
+                        `;
+                        rateDiv.textContent = `1 ${from} = 1 ${to}`;
+                        timeDiv.textContent = `Real-time rate`;
+                    } else if (exchangeRates[from] && exchangeRates[from][to]) {
+                        // Successful conversion
+                        const rate = exchangeRates[from][to];
+                        const convertedAmount = (amount * rate).toFixed(2);
+                        
+                        resultDiv.innerHTML = `
+                            <span class="original-amount">${amount} ${from}</span>
+                            <i class="fas fa-equals"></i>
+                            <span class="converted-amount">${convertedAmount} ${to}</span>
+                        `;
+                        rateDiv.textContent = `1 ${from} = ${rate.toFixed(4)} ${to}`;
+                        timeDiv.textContent = `Rate updated: ${new Date().toLocaleString()}`;
+                    } else {
+                        // Unsupported conversion
+                        throw new Error('Unsupported currency pair');
+                    }
+                } catch (error) {
+                    errorDiv.textContent = 'Conversion error: ' + error.message;
+                    updateResultPlaceholder();
+                }
+            }, 500);
+        }
+
+        // Initialize
+        updateResultPlaceholder();
+    </script>
+</body>
+</html>
